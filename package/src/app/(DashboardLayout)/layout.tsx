@@ -3,6 +3,7 @@ import { styled, Container, Box } from "@mui/material";
 import React, { useState } from "react";
 import Header from "@/app/(DashboardLayout)/layout/header/Header";
 import Sidebar from "@/app/(DashboardLayout)/layout/sidebar/Sidebar";
+import { useParams } from "next/navigation"
 
 
 const MainWrapper = styled("div")(() => ({
@@ -25,12 +26,18 @@ interface Props {
 }
 
 
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
+  const params = useParams();
+  const tenant = params.subdomain;
+
+  console.log("tenanthh--", tenant);
+  
+  
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   return (
