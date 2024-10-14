@@ -3,7 +3,7 @@ import { Grid, Box, Card, Typography, Stack } from "@mui/material"
 import Link from "next/link"
 import PageContainer from "@/components/PageContainer"
 // import Logo from "@/components/common/logo/Logo"
-import AuthRegister from "../auth/AuthRegister"
+import AuthRegister from "../authentication/auth/AuthRegister"
 
 const Register2 = () => (
 	<PageContainer title="Register" description="this is Register page">
@@ -42,18 +42,19 @@ const Register2 = () => (
 						elevation={9}
 						sx={{ p: 4, zIndex: 1, width: "100%", maxWidth: "500px" }}
 					>
+						<Typography variant="SPP_H1">Welcome, Admin!</Typography>
 						<Box display="flex" alignItems="center" justifyContent="center">
 							{/* <Logo /> */}
 						</Box>
 						<AuthRegister
 							subtext={
 								<Typography
-									variant="h4"
+									variant="subtitle1"
 									textAlign="center"
 									color="textSecondary"
 									mb={1}
 								>
-									Register Now
+									Your Social Campaigns
 								</Typography>
 							}
 							subtitle={

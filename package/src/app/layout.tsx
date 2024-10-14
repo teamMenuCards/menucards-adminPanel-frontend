@@ -1,22 +1,27 @@
-"use client";
-import { baselightTheme } from "@/utils/theme/DefaultColors";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+"use client"
+import { ThemeProvider } from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline"
+import { baselightTheme } from "@/ThemeRegistry/theme"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { useState } from "react"
 
 export default function RootLayout({
-  children,
+	children
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body>
-        <ThemeProvider theme={baselightTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+	const [queryClient] = useState(() => new QueryClient())
+
+	return (
+		<html lang="en">
+			<body>
+				<QueryClientProvider client={queryClient}>
+					<ThemeProvider theme={baselightTheme}>
+						<CssBaseline />
+						{children}
+					</ThemeProvider>
+				</QueryClientProvider>
+			</body>
+		</html>
+	)
 }

@@ -17,6 +17,7 @@
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.15",
     "@tabler/icons-react": "2.30.0",
+    "@tanstack/react-query": "^5.55.0",
     "@types/node": "20.4.5",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
@@ -34,5 +35,18 @@
   },
   "devDependencies": {
     "@types/lodash": "4.14.196"
+  },
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals",
+      "prettier"
+    ]
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "useTabs": true,
+    "singleQuote": false,
+    "trailingComma": "none"
   }
 }
