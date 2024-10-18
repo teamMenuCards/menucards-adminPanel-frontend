@@ -84,9 +84,15 @@ const Menuitems = [
 	},
 	{
 		id: uniqueId(),
-		title: "Add a Restaurant",
+		title: "Onboard Restaurant",
 		icon: IconAperture,
-		href: "/add-restaurant"
+		href: "/onboard-restaurant"
+	},
+	{
+		id: uniqueId(),
+		title: "Create Restaurant Id",
+		icon: IconAperture,
+		href: "/create-restaurant-id"
 	}
 ]
 

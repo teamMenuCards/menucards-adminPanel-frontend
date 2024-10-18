@@ -11,7 +11,7 @@ import PageContainer from "@/components/PageContainer"
 
 const Dashboard = () => {
 	return (
-		<PageContainer title="Dasjhhboard" description="this is Dashboard">
+		<PageContainer title="Menucards" description="this is Dashboard">
 			<Box>
 				<Grid container spacing={3}>
 					<Grid item xs={12} lg={8}>

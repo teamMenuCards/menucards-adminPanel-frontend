@@ -1,11 +1,11 @@
 "use client"
 import Link from "next/link"
 import { Grid, Box, Card, Stack, Typography } from "@mui/material"
-// components
 import PageContainer from "@/components/PageContainer"
 import AuthLogin from "../auth/AuthLogin"
 import { useMutation } from "@tanstack/react-query"
 import loginService from "@/services/login"
+import Loading from "@/app/loading"
 
 // Define the type for the login data
 interface LoginData {
@@ -26,12 +26,18 @@ const Login = () => {
 		}
 	})
 
+	const { isLoading } = mutation
+
 	// Handle login
 	const handleLogin = (userName: string, password: string) => {
 		mutation.mutate({
 			email: userName,
 			password: password
 		})
+	}
+
+	if (isLoading) {
+		return <Loading />
 	}
 
 	return (
@@ -98,7 +104,7 @@ const Login = () => {
 											variant="h6"
 											fontWeight="500"
 										>
-											New to Modernize?
+											New to Menucards?
 										</Typography>
 										<Typography
 											component={Link}
