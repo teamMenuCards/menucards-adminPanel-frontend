@@ -8,7 +8,7 @@ const loginService = async ({
 	email?: string
 	password?: string
 }) => {
-	const response = await fetch(`${process.env.NEXTAUTH_URL}/${PATHS.login}`, {
+	const response = await fetch(`${PATHS.login}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -20,7 +20,7 @@ const loginService = async ({
 	})
 
 	if (!response.ok) {
-		throw new Error("Failed to create user")
+		throw new Error("Failed to login user")
 	}
 
 	const data = await response.json()

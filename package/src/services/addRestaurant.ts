@@ -1,15 +1,8 @@
+import { log } from "console"
 import { PATHS } from "./paths"
 
-// Function to create addRestaurant
-const addRestaurant = async ({
-	name,
-	email,
-	phone_no,
-	pincode,
-	address,
-	country,
-	state
-}: {
+export interface RestoData {
+	subdomain: string
 	name: string
 	email: string
 	phone_no: string
@@ -17,31 +10,47 @@ const addRestaurant = async ({
 	address: string
 	country: string
 	state: string
-}) => {
-	const response = await fetch(
-		`${process.env.NEXTAUTH_URL}/${PATHS.add_restaurant}`,
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				name,
-				email,
-				phone_no,
-				pincode,
-				address,
-				country,
-				state
-			})
-		}
-	)
+	city: string
+}
+
+// Function to add Restaurant
+const addRestaurant = async ({
+	subdomain,
+	name,
+	email,
+	phone_no,
+	pincode,
+	address,
+	country,
+	state,
+	city
+}: RestoData) => {
+	console.log(PATHS.add_restaurant)
+
+	const url = `${process.env.NEXT_PUBLIC_API_URL}/${PATHS.add_restaurant}`
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			subdomain,
+			name,
+			email,
+			phone_no,
+			pincode,
+			address,
+			country,
+			state,
+			city
+		})
+	})
 
 	if (!response.ok) {
-		throw new Error("Failed to create user")
+		throw new Error("Failed to onboard restaurant")
 	}
 
-	const data = await response.json()
+	const { data } = await response.json()
 	return data
 }
 

@@ -4,6 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { baselightTheme } from "@/ThemeRegistry/theme"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
+import { SnackbarProvider } from "@/context"
 
 export default function RootLayout({
 	children
@@ -17,8 +18,10 @@ export default function RootLayout({
 			<body>
 				<QueryClientProvider client={queryClient}>
 					<ThemeProvider theme={baselightTheme}>
-						<CssBaseline />
-						{children}
+						<SnackbarProvider>
+							<CssBaseline />
+							{children}
+						</SnackbarProvider>
 					</ThemeProvider>
 				</QueryClientProvider>
 			</body>

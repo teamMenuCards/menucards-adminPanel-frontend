@@ -1,196 +1,188 @@
 "use client"
-import React, { useState } from "react"
-import { TextField, Button, Grid, Box } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Button, Grid, Box } from "@mui/material"
 import PageContainer from "@/components/PageContainer"
 import DashboardCard from "@/common/DashboardCard"
 import { useMutation } from "@tanstack/react-query"
-import addRestaurant from "@/services/addRestaurant"
-
-interface RestoData {
-	name: string
-	email: string
-	phone_no: string
-	pincode: string
-	address: string
-	country: string
-	state: string
-}
+import addRestaurant, { RestoData } from "@/services/addRestaurant"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { AddRestaurantSchema } from "./validation" // Ensure validation schema exists
+import TextBox from "@/components/elements/TextBox"
+import CreateuserId from "./createUserid"
 
 const AddRestaurant = () => {
-	const mutation = useMutation({
-		mutationFn: async (restoData: RestoData) => {
-			return addRestaurant(restoData)
-		},
-		onSuccess: (data) => {
-			console.log("Resto added successfully", data)
-		},
-		onError: (error: Error) => {
-			console.error("Resto adding failed", error.message)
+	const [showCreateIdForm, setShowCreateIdForm] = useState(false)
+
+	const {
+		formState: { errors },
+		handleSubmit,
+		register,
+		reset
+	} = useForm({
+		mode: "onSubmit",
+		resolver: yupResolver(AddRestaurantSchema),
+		defaultValues: {
+			name: "",
+			email: "",
+			phone_no: "",
+			pincode: "",
+			address: "",
+			country: "",
+			state: "",
+			subdomain: "",
+			city: ""
 		}
 	})
 
-	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		phone_no: "",
-		pincode: "",
-		address: "",
-		country: "",
-		state: ""
-	})
+	const {
+		mutate: addRestaurantSrvc,
+		data: addRestoData,
+		isLoading: addRestoLoading,
+		isError: addRestoHasError,
+		error: addRestoError,
+		isSuccess: addRestoSuccess
+	} = useMutation(addRestaurant)
 
-	const handleChange = (e) => {
-		const { name, value } = e.target
-		setFormData({
-			...formData,
-			[name]: value
-		})
+	const onSubmit = (formData: RestoData) => {
+		console.log("Submitting form data:", formData)
+		addRestaurantSrvc(formData) // Trigger mutation with form data
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
-		console.log(formData)
-
-		mutation.mutate({
-			name: formData.name,
-			email: formData.email,
-			phone_no: formData.phone_no,
-			pincode: formData.pincode,
-			address: formData.address,
-			country: formData.country,
-			state: formData.state
-		})
-	}
+	useEffect(() => {
+		if (addRestoSuccess) {
+			setShowCreateIdForm(true)
+		}
+	}, [addRestoSuccess])
 
 	return (
-		<PageContainer title="Typography" description="this is Typography">
-			<DashboardCard title="Onbaord Restaurant">
-				<Box
-					component="form"
-					onSubmit={handleSubmit}
-					sx={{
-						flexGrow: 1,
-						padding: 2,
-						margin: "auto"
-					}}
-				>
-					<Grid container spacing={2}>
-						{/* subdomain */}
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="Subdomain"
-								name="subdomain"
-								value={formData.name}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+		<PageContainer
+			title="Add Restaurant"
+			description="Add a new restaurant to the system"
+		>
+			<DashboardCard title="Onboard Restaurant">
+				{/* Create restaurant id form */}
+				{!showCreateIdForm && (
+					<Box
+						component="form"
+						onSubmit={handleSubmit(onSubmit)}
+						sx={{
+							flexGrow: 1,
+							padding: 2,
+							margin: "auto"
+						}}
+					>
+						<Grid container spacing={2}>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="Subdomain"
+									name="subdomain"
+									register={register}
+									required
+									error={!!errors.subdomain?.message}
+								/>
+							</Grid>
 
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="Name"
-								name="name"
-								value={formData.name}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="Name"
+									name="name"
+									register={register}
+									required
+									error={!!errors.name?.message}
+								/>
+							</Grid>
 
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="Email"
-								name="email"
-								type="email"
-								value={formData.email}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="Email"
+									name="email"
+									type="email"
+									register={register}
+									required
+									error={!!errors.email?.message}
+								/>
+							</Grid>
 
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="Phone No."
-								name="phone_no"
-								value={formData.phone_no}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="Phone No."
+									name="phone_no"
+									register={register}
+									required
+									error={!!errors.phone_no?.message}
+								/>
+							</Grid>
 
-						{/* Address (Full Width) */}
-						<Grid item xs={12}>
-							<TextField
-								label="Address"
-								name="address"
-								value={formData.address}
-								onChange={handleChange}
-								multiline
-								rows={3}
-								fullWidth
-							/>
-						</Grid>
+							{/* Address */}
+							<Grid item xs={12}>
+								<TextBox
+									label="Address"
+									name="address"
+									register={register}
+									multiline
+									rows={3}
+									error={!!errors.address?.message}
+								/>
+							</Grid>
 
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="Pincode"
-								name="pincode"
-								value={formData.pincode}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="Pincode"
+									name="pincode"
+									register={register}
+									required
+									error={!!errors.pincode?.message}
+								/>
+							</Grid>
 
-						{/* Country and State */}
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="Country"
-								name="country"
-								value={formData.country}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="State"
-								name="state"
-								value={formData.state}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="Country"
+									name="country"
+									register={register}
+									required
+									error={!!errors.country?.message}
+								/>
+							</Grid>
 
-						<Grid item xs={12} sm={6}>
-							<TextField
-								label="City"
-								name="city"
-								value={formData.state}
-								onChange={handleChange}
-								fullWidth
-								required
-							/>
-						</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="State"
+									name="state"
+									register={register}
+									required
+									error={!!errors.state?.message}
+								/>
+							</Grid>
 
-						{/* Submit Button */}
-						<Grid item xs={12}>
-							<Button
-								type="submit"
-								variant="contained"
-								color="primary"
-								fullWidth
-							>
-								Submit
-							</Button>
+							<Grid item xs={12} sm={6}>
+								<TextBox
+									label="City"
+									name="city"
+									register={register}
+									required
+									error={!!errors.city?.message}
+								/>
+							</Grid>
+
+							{/* Submit Button */}
+							<Grid item xs={12}>
+								<Button
+									type="submit"
+									variant="contained"
+									color="primary"
+									disabled={addRestoLoading}
+								>
+									{addRestoLoading ? "Submitting..." : "Add Restaurant"}
+								</Button>
+							</Grid>
 						</Grid>
-					</Grid>
-				</Box>
+					</Box>
+				)}
+
+				{/* Create user id form */}
+				{showCreateIdForm && <CreateuserId restoId={addRestoData?.id} />}
 			</DashboardCard>
 		</PageContainer>
 	)

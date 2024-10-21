@@ -87,12 +87,6 @@ const Menuitems = [
 		title: "Onboard Restaurant",
 		icon: IconAperture,
 		href: "/onboard-restaurant"
-	},
-	{
-		id: uniqueId(),
-		title: "Create Restaurant Id",
-		icon: IconAperture,
-		href: "/create-restaurant-id"
 	}
 ]
 
