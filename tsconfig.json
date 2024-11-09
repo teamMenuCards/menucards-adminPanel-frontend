@@ -23,7 +23,7 @@
 			}
 		],
 		"paths": {
-			"@mcc/*": ["./src/*"],
+			"@/*": ["./src/*"],
 			"types/*": ["./@types/*"]
 		},
 		"noEmitOnError": false // Prevents emitting output files on error
