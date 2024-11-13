@@ -13,7 +13,7 @@ import Link from "next/link"
 import CustomTextField from "@/app/(dashboard)/forms/theme-elements/CustomTextField"
 
 interface loginType {
-	onClick?: () => void
+	onClick?: (userName, password) => void
 	title?: string
 	subtitle?: JSX.Element | JSX.Element[]
 	subtext?: JSX.Element | JSX.Element[]
@@ -100,7 +100,7 @@ const AuthLogin = ({ onClick, title, subtitle, subtext }: loginType) => {
 					fullWidth
 					// component={Link}
 					type="submit"
-					onClick={() => onClick(userName, password)}
+					onClick={() => onClick && onClick(userName, password)}
 				>
 					Log In
 				</Button>

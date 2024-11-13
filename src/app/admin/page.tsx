@@ -42,7 +42,7 @@ const Register2 = () => (
 						elevation={9}
 						sx={{ p: 4, zIndex: 1, width: "100%", maxWidth: "500px" }}
 					>
-						<Typography variant="SPP_H1">Welcome, Admin!</Typography>
+						<Typography variant="h3">Welcome, Admin!</Typography>
 						<Box display="flex" alignItems="center" justifyContent="center">
 							{/* <Logo /> */}
 						</Box>

@@ -46,6 +46,19 @@ const Login = () => {
 		return <Loading />
 	}
 
+	if (mutation.isLoading) {
+		return <p>Loading...</p>
+	}
+
+	if (mutation.isError) {
+		return (
+			<p>
+				{mutation.error instanceof Error
+					? mutation.error.message
+					: "An error occurred"}
+			</p>
+		)
+	}
 	return (
 		<PageContainer title="Login" description="this is Login page">
 			<Box
@@ -130,16 +143,6 @@ const Login = () => {
 					</Grid>
 				</Grid>
 			</Box>
-
-			{mutation.isLoading && <p>Loading...</p>}
-			{mutation.isError && (
-				<p>
-					Error:{" "}
-					{mutation.error instanceof Error
-						? mutation.error.message
-						: "An error occurred"}
-				</p>
-			)}
 		</PageContainer>
 	)
 }

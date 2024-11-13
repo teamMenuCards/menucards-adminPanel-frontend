@@ -72,128 +72,130 @@ const AddRestaurant = () => {
 			description="Add a new restaurant to the system"
 		>
 			<DashboardCard title="Onboard New Restaurant">
-				{/* Create restaurant id form */}
-				{!showCreateIdForm && (
-					<Box
-						component="form"
-						onSubmit={handleSubmit(onSubmit)}
-						sx={{
-							flexGrow: 1,
-							padding: 2,
-							margin: "auto"
-						}}
-					>
-						<Grid container spacing={2}>
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="Subdomain"
-									name="subdomain"
-									register={register}
-									required
-									error={!!errors.subdomain?.message}
-								/>
-							</Grid>
+				<>
+					{/* Create restaurant id form */}
+					{!showCreateIdForm && (
+						<Box
+							component="form"
+							onSubmit={handleSubmit(onSubmit)}
+							sx={{
+								flexGrow: 1,
+								padding: 2,
+								margin: "auto"
+							}}
+						>
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="Subdomain"
+										name="subdomain"
+										register={register}
+										required
+										error={!!errors.subdomain?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="Name"
-									name="name"
-									register={register}
-									required
-									error={!!errors.name?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="Name"
+										name="name"
+										register={register}
+										required
+										error={!!errors.name?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="Email"
-									name="email"
-									type="email"
-									register={register}
-									required
-									error={!!errors.email?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="Email"
+										name="email"
+										type="email"
+										register={register}
+										required
+										error={!!errors.email?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="Phone No."
-									name="phone_no"
-									register={register}
-									required
-									error={!!errors.phone_no?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="Phone No."
+										name="phone_no"
+										register={register}
+										required
+										error={!!errors.phone_no?.message}
+									/>
+								</Grid>
 
-							{/* Address */}
-							<Grid item xs={12}>
-								<TextBox
-									label="Address"
-									name="address"
-									register={register}
-									multiline
-									rows={3}
-									error={!!errors.address?.message}
-								/>
-							</Grid>
+								{/* Address */}
+								<Grid item xs={12}>
+									<TextBox
+										label="Address"
+										name="address"
+										register={register}
+										multiline
+										rows={3}
+										error={!!errors.address?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="Pincode"
-									name="pincode"
-									register={register}
-									required
-									error={!!errors.pincode?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="Pincode"
+										name="pincode"
+										register={register}
+										required
+										error={!!errors.pincode?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="Country"
-									name="country"
-									register={register}
-									required
-									error={!!errors.country?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="Country"
+										name="country"
+										register={register}
+										required
+										error={!!errors.country?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="State"
-									name="state"
-									register={register}
-									required
-									error={!!errors.state?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="State"
+										name="state"
+										register={register}
+										required
+										error={!!errors.state?.message}
+									/>
+								</Grid>
 
-							<Grid item xs={12} sm={6}>
-								<TextBox
-									label="City"
-									name="city"
-									register={register}
-									required
-									error={!!errors.city?.message}
-								/>
-							</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextBox
+										label="City"
+										name="city"
+										register={register}
+										required
+										error={!!errors.city?.message}
+									/>
+								</Grid>
 
-							{/* Submit Button */}
-							<Grid item xs={12}>
-								<Button
-									type="submit"
-									variant="contained"
-									color="primary"
-									disabled={addRestoLoading}
-								>
-									{addRestoLoading ? "Submitting..." : "Add Restaurant"}
-								</Button>
+								{/* Submit Button */}
+								<Grid item xs={12}>
+									<Button
+										type="submit"
+										variant="contained"
+										color="primary"
+										disabled={addRestoLoading}
+									>
+										{addRestoLoading ? "Submitting..." : "Add Restaurant"}
+									</Button>
+								</Grid>
 							</Grid>
-						</Grid>
-					</Box>
-				)}
+						</Box>
+					)}
 
-				{/* Create user id form */}
-				{showCreateIdForm && <CreateuserId restoId={addRestoData?.id} />}
+					{/* Create user id form */}
+					{showCreateIdForm && <CreateuserId restoId={addRestoData?.id} />}
+				</>
 			</DashboardCard>
 		</PageContainer>
 	)
