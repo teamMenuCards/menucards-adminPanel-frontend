@@ -44,10 +44,10 @@ export function middleware(request: NextRequest) {
 	const sessionId = request.cookies.get("session-id")?.value
 
 	// Check if the request is for the root path and if the user is authenticated
-	if (!sessionId) {
-		// Redirect to the login page if unauthenticated
-		return NextResponse.redirect(new URL("/authentication/login", request.url))
-	}
+	// if (!sessionId) {
+	// 	Redirect to the login page if unauthenticated
+	// 	return NextResponse.redirect(new URL("/authentication/login", request.url))
+	// }
 
 	return NextResponse.next()
 }
