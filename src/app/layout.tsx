@@ -5,6 +5,10 @@ import { baselightTheme } from "@/ThemeRegistry/theme"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
 import { SnackbarProvider } from "@/context"
+import { Provider } from "react-redux"
+// import { store } from "@/store/store"
+import { RootProvider } from '@/app/providers/RootProvider'
+
 
 export default function RootLayout({
 	children
@@ -16,6 +20,8 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
+			{/* <Provider store={store}> */}
+				<RootProvider>
 				<QueryClientProvider client={queryClient}>
 					<ThemeProvider theme={baselightTheme}>
 						<SnackbarProvider>
@@ -24,6 +30,8 @@ export default function RootLayout({
 						</SnackbarProvider>
 					</ThemeProvider>
 				</QueryClientProvider>
+				{/* </Provider> */}
+				</RootProvider>
 			</body>
 		</html>
 	)

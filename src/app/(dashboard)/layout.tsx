@@ -5,6 +5,7 @@ import Header from "@/components/header/Header"
 import Sidebar from "@/components/sidebar/Sidebar"
 import { useParams } from "next/navigation"
 
+
 const MainWrapper = styled("div")(() => ({
 	display: "flex",
 	minHeight: "100vh",
@@ -44,25 +45,26 @@ export default function RootLayout({
 	const [isSidebarOpen, setSidebarOpen] = useState(true)
 	const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 	return (
-		<MainWrapper className="mainwrapper">
-			<Sidebar
-				isSidebarOpen={isSidebarOpen}
-				isMobileSidebarOpen={isMobileSidebarOpen}
-				onSidebarClose={() => setMobileSidebarOpen(false)}
-			/>
+		
+			<MainWrapper className="mainwrapper">
+				{/* <Sidebar
+					isSidebarOpen={isSidebarOpen}
+					isMobileSidebarOpen={isMobileSidebarOpen}
+					onSidebarClose={() => setMobileSidebarOpen(false)}
+				/> */}
 
-			<PageWrapper className="page-wrapper">
-				<Header toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
+				<PageWrapper className="page-wrapper">
+					<Header toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
 
-				<Container
-					sx={{
-						paddingTop: "20px",
-						maxWidth: "1200px"
-					}}
-				>
-					<Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
-				</Container>
-			</PageWrapper>
-		</MainWrapper>
+					<Container
+						sx={{
+							paddingTop: "20px",
+							maxWidth: "1200px"
+						}}
+					>
+						<Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
+					</Container>
+				</PageWrapper>
+			</MainWrapper>
 	)
 }
