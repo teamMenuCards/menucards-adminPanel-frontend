@@ -39,6 +39,9 @@ export type RestaurantDetailType = {
 			avg_person: number
 			location_info: string
 		}
+		reviews_image_url_details?: {
+			review_image_url: string
+		}[]
 	}
 	createdAt: string
 	updatedAt: string
