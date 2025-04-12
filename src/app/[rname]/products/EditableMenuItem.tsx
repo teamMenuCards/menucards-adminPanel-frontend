@@ -1,19 +1,39 @@
 import { useState, memo, useCallback } from "react";
 import { ProductType, ProductVariantType } from "@/types";
-import { TextField, RadioGroup, FormControlLabel, Radio, Grid, InputAdornment } from "@mui/material";
+import { 
+  TextField, 
+  RadioGroup, 
+  FormControlLabel, 
+  Radio, 
+  Grid, 
+  InputAdornment,
+  Switch,
+  Typography,
+  FormGroup,
+  Snackbar,
+  Alert
+} from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button, CircularProgress } from "@mui/material";
 import { useUpdateProductMutation } from "@/services/update-product";
+import { useUpdateProductBaseMutation } from "@/services/update-product-base";
 
 function EditableMenuItem({ product: initialProduct }: { product: ProductType & { variants: ProductVariantType[] } }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [product, setProduct] = useState<ProductType & { variants: ProductVariantType[] }>(
     JSON.parse(JSON.stringify(initialProduct))
   );
+  const [alertState, setAlertState] = useState<{open: boolean; message: string; severity: 'success' | 'error'}>({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
 
+  // APIs
+  const [updateProductBase] = useUpdateProductBaseMutation();
   const [updateProduct] = useUpdateProductMutation();
 
-  const handleProductChange = useCallback((field: string, value: string) => {
+  const handleProductChange = useCallback((field: string, value: string | boolean) => {
     setProduct((prev) => ({ ...prev, [field]: value }));
   }, []);
 
@@ -34,8 +54,20 @@ function EditableMenuItem({ product: initialProduct }: { product: ProductType & 
 
     setIsUpdating(true);
     try {
+      // First update the product base (name, description, is_featured)
+      await updateProductBase({
+        id: product.id, // Using the product ID, not the variant ID
+        data: {
+          name: variant.variant_name, // Use the same name as variant_name for consistency
+          description: product.description,
+          is_featured: product.is_featured,
+          // Do not include category_id unless you want to change it
+        },
+      }).unwrap();
+
+      // Then update the product variant details
       await updateProduct({
-        id: variant.id,
+        id: variant.id, // Using the variant ID
         data: {
           variant_name: variant.variant_name,
           is_veg: variant.is_veg,
@@ -51,17 +83,52 @@ function EditableMenuItem({ product: initialProduct }: { product: ProductType & 
           ingredients: variant.ingredients ?? null,
         },
       }).unwrap();
+      
+      setAlertState({
+        open: true,
+        message: "Product updated successfully",
+        severity: 'success'
+      });
       console.log("Product updated successfully");
     } catch (error) {
       console.error("Failed to update product:", error);
+      setAlertState({
+        open: true,
+        message: "Failed to update product",
+        severity: 'error'
+      });
     } finally {
       setIsUpdating(false);
     }
-  }, [product.variants, updateProduct]);
+  }, [product, updateProductBase, updateProduct]);
+
+  const handleCloseAlert = () => {
+    setAlertState(prev => ({ ...prev, open: false }));
+  };
 
   return (
     <div className="pt-2">
       <Grid container spacing={3}>
+        {/* Featured Toggle */}
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={product.is_featured || false}
+                  onChange={(e) => handleProductChange("is_featured", e.target.checked)}
+                  color="primary"
+                />
+              }
+              label={
+                <Typography variant="body1" sx={{ fontWeight: product.is_featured ? 'bold' : 'normal' }}>
+                  {product.is_featured ? 'Featured Item ⭐' : 'Not Featured'}
+                </Typography>
+              }
+            />
+          </FormGroup>
+        </Grid>
+
         {/* Product Type */}
         <Grid item xs={12}>
           <RadioGroup 
@@ -100,7 +167,11 @@ function EditableMenuItem({ product: initialProduct }: { product: ProductType & 
             fullWidth 
             variant="outlined" 
             value={product.variants?.[0]?.variant_name || ""} 
-            onChange={(e) => handleVariantChange("variant_name", e.target.value)} 
+            onChange={(e) => {
+              handleVariantChange("variant_name", e.target.value);
+              // Also update the product name to match variant name for consistency
+              handleProductChange("name", e.target.value);
+            }} 
           />
         </Grid>
 
@@ -164,6 +235,22 @@ function EditableMenuItem({ product: initialProduct }: { product: ProductType & 
           </Button>
         </Grid>
       </Grid>
+
+      {/* Alert for success/error messages */}
+      <Snackbar 
+        open={alertState.open} 
+        autoHideDuration={6000} 
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseAlert} 
+          severity={alertState.severity} 
+          sx={{ width: '100%' }}
+        >
+          {alertState.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
