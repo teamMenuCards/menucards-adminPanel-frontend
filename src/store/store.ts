@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { updateCategoryApi } from '@/services/update-category';
 import { rootReducer } from './features';
 import { updateProductApi } from "@/services/update-product";
+import { updateProductBaseApi } from '@/services/update-product-base';
 
 export const makeStore = () => {
   return configureStore({
@@ -16,6 +17,7 @@ export const makeStore = () => {
         .prepend(getRestaurantDetailAPI.middleware)
         .prepend(updateCategoryApi.middleware)
         .prepend(updateProductApi.middleware)
+        .prepend(updateProductBaseApi.middleware)
         .concat(logger),
   });
 };

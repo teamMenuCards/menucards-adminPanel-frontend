@@ -29,6 +29,7 @@ export type ProductType = {
 	active: boolean
 	createdAt: string
 	updatedAt: string
+	is_featured: boolean
 }
 
 export type ProductCategoryType = {
@@ -44,4 +45,5 @@ export type ProductCategoryType = {
 	available_from: string; // Add this line
   	available_to: string;   // Add this line
 	parent_category_id?: string | null
+	is_featured: boolean
 }

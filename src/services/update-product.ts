@@ -16,6 +16,7 @@ export interface UpdateProductRequest {
   calories?: number | null;
   spiciness?: number | null;
   ingredients?: string | null;
+  is_featured?: boolean;
 }
 
 // Define the API for updating a product
