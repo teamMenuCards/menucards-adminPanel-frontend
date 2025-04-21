@@ -64,7 +64,7 @@ const MSidebar = ({
 						<Sidebar
 							width={"270px"}
 							collapsewidth="80px"
-							open={isSidebarOpen}
+							// open={isSidebarOpen} //TOCHECK
 							themeColor="#5d87ff"
 							themeSecondaryColor="#49beff"
 							showProfile={false}
