@@ -42,6 +42,9 @@ function EditableMenuItem({
 	const [updateProductBase] = useUpdateProductBaseMutation()
 	const [updateProduct] = useUpdateProductMutation()
 
+
+	/* console.log(product);
+	console.log(product.variants); */
 	const handleProductChange = useCallback(
 		(field: string, value: string | boolean) => {
 			setProduct((prev) => ({ ...prev, [field]: value }))
@@ -88,7 +91,7 @@ function EditableMenuItem({
 					name: product.name,
 					description: product.description,
 					is_featured: product.is_featured,
-					display_order:Number(product.display_order)
+					display_order: Number(product.display_order)
 				}
 			}).unwrap()
 
@@ -140,10 +143,7 @@ function EditableMenuItem({
 	}
 
 	return (
-	
-
-		
-	<div className="pt-2">
+		<div className="pt-2">
 			<Grid container spacing={3}>
 				{/* Product Name (Main Product) */}
 				<Grid item xs={12}>
@@ -188,7 +188,9 @@ function EditableMenuItem({
 						fullWidth
 						variant="outlined"
 						value={product.display_order}
-						onChange={(e) => handleProductChange("display_order", e.target.value)}
+						onChange={(e) =>
+							handleProductChange("display_order", e.target.value)
+						}
 					/>
 				</Grid>
 				{/* Description */}
@@ -346,8 +348,6 @@ function EditableMenuItem({
 				</Alert>
 			</Snackbar>
 		</div>
-		
-
 	)
 }
 

@@ -3,6 +3,8 @@ import { getRestaurantDetailAPI } from './get-restaurant-detail';
 import { updateCategoryApi } from './update-category'
 import { updateProductApi } from "./update-product";
 import { updateProductBaseApi } from './update-product-base';
+import { deleteProductApi } from './delete-product';
+import { deleteProductDetailApi } from './delete-product-details';
 
 export const apis = {
   [getMenuListAPI.reducerPath]: getMenuListAPI.reducer,
@@ -10,4 +12,6 @@ export const apis = {
   [updateCategoryApi.reducerPath]: updateCategoryApi.reducer,
   [updateProductApi.reducerPath]: updateCategoryApi.reducer,
   [updateProductBaseApi.reducerPath]: updateProductBaseApi.reducer,
+  [deleteProductApi.reducerPath]:deleteProductApi.reducer,
+  [deleteProductDetailApi.reducerPath]:deleteProductDetailApi.reducer,
 } as const;
