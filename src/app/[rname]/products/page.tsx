@@ -13,8 +13,9 @@ export default function AdminEditProductsPage() {
   const { currentData: menudata, refetch: refetchMenu, isLoading } = useGetMenuListByNameQuery(rname)
   const categories = menudata?.categories || []
   const [isUpdating, setIsUpdating] = useState(false)
-
-  const handleUpdateProducts = async () => {
+ console.log("menudata:",menudata);
+  
+ const handleUpdateProducts = async () => {
     setIsUpdating(true)
     try {
       await refetchMenu()
