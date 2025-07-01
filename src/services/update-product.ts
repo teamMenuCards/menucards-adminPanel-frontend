@@ -22,7 +22,7 @@ export interface UpdateProductRequest {
 // Define the API for updating a product
 export const updateProductApi = createApi({
   reducerPath: "updateProductApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4200/" }),
   endpoints: (builder) => ({
     updateProduct: builder.mutation<any, { id: string; data: UpdateProductRequest }>({
       query: ({ id, data }) => ({

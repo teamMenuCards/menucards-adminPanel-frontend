@@ -1,3 +1,4 @@
+import React from "react"
 import { useState, memo, useCallback } from "react"
 import { ProductType, ProductVariantType } from "@/types"
 import {
@@ -41,6 +42,9 @@ function EditableMenuItem({
 	const [updateProductBase] = useUpdateProductBaseMutation()
 	const [updateProduct] = useUpdateProductMutation()
 
+
+	/* console.log(product);
+	console.log(product.variants); */
 	const handleProductChange = useCallback(
 		(field: string, value: string | boolean) => {
 			setProduct((prev) => ({ ...prev, [field]: value }))
@@ -86,7 +90,8 @@ function EditableMenuItem({
 				data: {
 					name: product.name,
 					description: product.description,
-					is_featured: product.is_featured
+					is_featured: product.is_featured,
+					display_order: Number(product.display_order)
 				}
 			}).unwrap()
 
@@ -175,6 +180,18 @@ function EditableMenuItem({
 							}
 						/>
 					</FormGroup>
+				</Grid>
+				{/* Product Display Order */}
+				<Grid item xs={12}>
+					<TextField
+						label="Display Order"
+						fullWidth
+						variant="outlined"
+						value={product.display_order}
+						onChange={(e) =>
+							handleProductChange("display_order", e.target.value)
+						}
+					/>
 				</Grid>
 				{/* Description */}
 				<Grid item xs={12}>

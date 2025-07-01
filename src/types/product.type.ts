@@ -26,6 +26,7 @@ export type ProductType = {
 	id: string
 	name: string
 	description: string
+	display_order?: number
 	active: boolean
 	createdAt: string
 	updatedAt: string

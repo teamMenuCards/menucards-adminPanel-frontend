@@ -19,6 +19,7 @@ import SaveIcon from "@mui/icons-material/Save"
 import { useUpdateCategoryMutation } from "@/services/update-category"
 import MuiAlert, { AlertProps } from "@mui/material/Alert"
 import { Snackbar, SnackbarCloseReason } from "@mui/material"
+import AnimatedDeleteIcon from "./Deletion"
 
 interface EditableAccordionProps {
 	sections?: Category[]
@@ -41,6 +42,8 @@ const ProductAccordion = memo(
 		productIndex: number
 		toggleProductSection: (categoryId: string, productIndex: number) => void
 	}) => {
+
+		
 		return (
 			<Accordion
 				key={item.id}
@@ -66,7 +69,7 @@ const ProductAccordion = memo(
 					sx={{
 						backgroundColor: "#f8fafc",
 						borderBottom: isOpen ? "1px solid #e2e8f0" : "none",
-						"& .MuiAccordionSummary-content": { alignItems: "center" }
+						"& .MuiAccordionSummary-content": { alignItems: "center",justifyContent: "space-between",paddingRight:"2rem" }
 					}}
 				>
 					<div className="flex items-center w-full">
@@ -80,6 +83,11 @@ const ProductAccordion = memo(
 						/>
 						<span className="font-medium">{item.name}</span>
 					</div>
+					<div className="mr-0">
+						
+<AnimatedDeleteIcon  productId={item?.id}  productDetailId={item?.variants?.[0]?.id}/>
+					</div>
+					
 				</AccordionSummary>
 
 				<AccordionDetails>
