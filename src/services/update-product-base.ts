@@ -5,6 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export interface UpdateProductBaseRequest {
   name?: string;
   description?: string | null;
+  display_order?: number;
   details?: Record<string, any> | null;
   category_id?: string;
   is_featured?: boolean;
@@ -13,7 +14,7 @@ export interface UpdateProductBaseRequest {
 // Define the API for updating a product base
 export const updateProductBaseApi = createApi({
   reducerPath: "updateProductBaseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4200" }),
   endpoints: (builder) => ({
     updateProductBase: builder.mutation<any, { id: string; data: UpdateProductBaseRequest }>({
       query: ({ id, data }) => ({
