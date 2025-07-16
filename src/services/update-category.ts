@@ -18,7 +18,7 @@ export interface UpdateCategoryRequest {
 // Define the API for updating a category
 export const updateCategoryApi = createApi({
   reducerPath: 'updateCategoryApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl:"http://localhost:4200" }),
   endpoints: (builder) => ({
     updateCategory: builder.mutation<any, { id: string; data: UpdateCategoryRequest }>({
       query: ({ id, data }) => ({

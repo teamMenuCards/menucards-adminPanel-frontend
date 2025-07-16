@@ -1,12 +1,9 @@
 import React from "react"
 import { Category } from "@/services/get-menu-list"
 import { UpdateCategoryRequest } from "@/services/update-category"
+import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
 import {
-	Accordion,
-	AccordionSummary,
-	AccordionDetails,
-} from "@mui/material"
-import {
+	IconButton,
 	Grid,
 	TextField,
 	Button,
@@ -17,12 +14,14 @@ import {
 } from "@mui/material"
 import SaveIcon from "@mui/icons-material/Save"
 import { useState, useEffect, useCallback } from "react"
-import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material"
 import { TimeFromPicker, TimeToPicker } from "./Timepicker"
 import { useUpdateCategoryMutation } from "@/services/update-category"
 import MuiAlert, { AlertProps } from "@mui/material/Alert"
 import { Snackbar, SnackbarCloseReason } from "@mui/material"
-
+import {
+	ExpandMore as ExpandMoreIcon,
+	ExpandLess as ExpandLessIcon
+} from "@mui/icons-material"
 
 interface EditableCategoryProps {
 	sections?: Category[]
@@ -33,17 +32,27 @@ const EditableCategory: React.FC<EditableCategoryProps> = ({
 	sections,
 	onUpdateCategory
 }) => {
+	const [openIndexes, setOpenIndexes] = useState<number[]>([])
 	const [editedCategories, setEditedCategories] = useState<Category[]>([])
 	const [expanded, setExpanded] = useState(true)
 	const [updateCategory] = useUpdateCategoryMutation()
-	const [categoryUpdating, setCategoryUpdating] = useState<{[key: string]: boolean}>({})
+	const [categoryUpdating, setCategoryUpdating] = useState<{
+		[key: string]: boolean
+	}>({})
 	const [snackbarOpen, setSnackbarOpen] = useState(false)
 	const [snackbarMessage, setSnackbarMessage] = useState("")
 
 	useEffect(() => {
-		sections?.length ? setEditedCategories(sections) : null
+		if (sections && sections.length) {
+			setEditedCategories(sections)
+		}
 	}, [sections])
-	
+
+	const toggleSection = useCallback((index: number) => {
+		setOpenIndexes((prev) =>
+			prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+		)
+	}, [])
 
 	const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 		props,
@@ -75,7 +84,7 @@ const EditableCategory: React.FC<EditableCategoryProps> = ({
 					available_to: categoryToUpdate.available_to || "23:59:00",
 					parent_id: categoryToUpdate.parent_category_id || undefined
 				}
-                
+
 				/* console.log("Sending to API", {
 					id: categoryId,
 					data: updateData
@@ -102,7 +111,7 @@ const EditableCategory: React.FC<EditableCategoryProps> = ({
 			setEditedCategories((prev) =>
 				prev.map((category) =>
 					category.id === categoryId
-						? { ...category, [field]: value } // ✅ dynamic field update
+						? { ...category, [field]: value }
 						: category
 				)
 			)
@@ -138,21 +147,29 @@ const EditableCategory: React.FC<EditableCategoryProps> = ({
 			{editedCategories.map((section, index) => (
 				<Accordion
 					key={section.id}
-					expanded={expanded}
-					onChange={() => setExpanded(!expanded)}
+					expanded={openIndexes.includes(index)}
 					sx={{
 						boxShadow: 3,
 						"&:before": { display: "none" },
 						borderRadius: 2,
 						overflow: "hidden",
-						marginBottom: "10px"
+						marginBottom: "10px",
+						marginTop: "2rem"
 					}}
 				>
 					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
+						expandIcon={
+							<IconButton onClick={() => toggleSection(index)}>
+								{openIndexes.includes(index) ? (
+									<ExpandLessIcon />
+								) : (
+									<ExpandMoreIcon />
+								)}
+							</IconButton>
+						}
 						sx={{
 							backgroundColor: "#f8fafc",
-							borderBottom: expanded ? "1px solid #e2e8f0" : "none",
+							borderBottom: "1px solid #e2e8f0",
 
 							"& .MuiAccordionSummary-content": { alignItems: "center" }
 						}}
@@ -163,7 +180,7 @@ const EditableCategory: React.FC<EditableCategoryProps> = ({
 							<h2>{section.name}</h2>
 						</div>
 					</AccordionSummary>
-					{expanded && (
+					{openIndexes.includes(index) && (
 						<AccordionDetails
 							sx={{
 								md: 15
