@@ -27,6 +27,21 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 
 	return (
 		<>
+		{/*WhatsApp Number*/}
+		<Grid item xs={5} md={4}>
+				<TextField
+					label="WhatsApp Number"
+					fullWidth
+					variant="outlined"
+					value={detail?.details.wa_api_details?.wa_number}
+					onChange={(e) =>
+						handleDetailsChange?.(
+							"details.wa_api_details.wa_number",
+							e.target.value
+						)
+					}
+				/>
+			</Grid>
 			{/*Logo Image*/}
 			<Grid item xs={10} md={8}>
 				<TextField
@@ -47,27 +62,13 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 					onChange={(e) => handleDetailsChange?.("cover_image", e.target.value)}
 				/>
 			</Grid>
-			{/*WhatsApp Number*/}
-			<Grid item xs={5}>
-				<TextField
-					label="WhatsApp Number"
-					fullWidth
-					variant="outlined"
-					value={detail?.details.wa_api_details?.wa_number}
-					onChange={(e) =>
-						handleDetailsChange?.(
-							"details.wa_api_details.wa_number",
-							e.target.value
-						)
-					}
-				/>
-			</Grid>
+			
 			<Grid item xs={10}>
 			
 				<p style={{ fontSize: "1.5rem" }}>Meta Details:</p>
 			</Grid>
 			{/*Category*/}
-			<Grid item xs={5}>
+			<Grid item xs={5} md={4}>
 				<TextField
 					label="Category"
 					fullWidth
@@ -82,7 +83,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 				/>
 			</Grid>
 					{/*Phone Number*/}
-					<Grid item xs={5}>
+					<Grid item xs={5} md={4}>
 				<TextField
 					label="Mobile Number"
 					fullWidth
@@ -98,7 +99,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 			</Grid>
 			{/*Opening time*/}
 
-			<Grid item xs={5}>
+			<Grid item xs={5} md={4} >
 				<TextField
 					label="Opening Time"
 					fullWidth
@@ -114,7 +115,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 			</Grid>
 			{/*closing time*/}
 
-			<Grid item xs={5}>
+			<Grid item xs={5} md={4}>
 				<TextField
 					label="Closing Time"
 					fullWidth
@@ -130,7 +131,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 			</Grid>
 			{/*AVERAGE PERSON*/}
 
-			<Grid item xs={5}>
+			<Grid item xs={5} md={4}>
 				<TextField
 					label="Average Person"
 					fullWidth
@@ -146,7 +147,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 			</Grid>
 			{/*AVERAGE PRICE*/}
 
-			<Grid item xs={5}>
+			<Grid item xs={5} md={4} >
 				<TextField
 					label="Average Price"
 					fullWidth
@@ -162,7 +163,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 			</Grid>
 	
 			{/*location_info*/}
-			<Grid item xs={5}>
+			<Grid item xs={5} md={4}>
 				<TextField
 					label="Location Info"
 					fullWidth
@@ -224,7 +225,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 			</Grid>
 			{detail?.details.platform_reviews?.map((item, index) => (
 				<React.Fragment key={index}>
-					<Grid item xs={5}>
+					<Grid item xs={5} md={4}>
 						<TextField
 							label="Platform name"
 							fullWidth
@@ -240,7 +241,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 							}
 						/>
 					</Grid>
-					<Grid item xs={5}>
+					<Grid item xs={5} md={4}>
 						<TextField
 							label="Average Rating"
 							fullWidth
@@ -256,7 +257,7 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 							}
 						/>
 					</Grid>
-					<Grid item xs={5}>
+					<Grid item xs={5} md={4}>
 						<TextField
 							label="Total Reviews"
 							fullWidth
@@ -272,7 +273,6 @@ const EditableRestaurantDetails: React.FC<RestaurantDetailsProps> = ({
 							}
 						/>
 					</Grid>
-					<Grid item xs={5}></Grid>
 				</React.Fragment>
 			))}
 
