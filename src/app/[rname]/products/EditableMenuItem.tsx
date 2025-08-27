@@ -282,7 +282,7 @@ function EditableMenuItem({
 									/>
 								</Grid>
 
-								{/* Allergens */}
+								{/* Allergens  field */}
 								<Grid item xs={12}>
 									<TextField
 										label="Allergens"
