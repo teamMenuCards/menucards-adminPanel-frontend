@@ -282,6 +282,21 @@ function EditableMenuItem({
 									/>
 								</Grid>
 
+								{/* Allergens */}
+								<Grid item xs={12}>
+									<TextField
+										label="Allergens"
+										fullWidth
+										variant="outlined"
+										value={variant.allergens || ""}
+										onChange={(e) =>
+											handleVariantChange("allergens", e.target.value, variant)
+										}
+										placeholder="e.g., Nuts, Dairy, Gluten"
+										helperText="Enter allergens separated by commas"
+									/>
+								</Grid>
+
 								{/* Individual save button */}
 							</>
 						)
